@@ -52,7 +52,7 @@ async function getShares() {
 
   var res = await lidoContract.methods.sharesOf(addy).call()
   var shares = new BigNumber(res).shiftedBy(-18)
-  sharesEl.innerText = shares.toFixed(2);
+  sharesEl.innerText = shares
 
   res = await lidoContract.methods.getTotalShares().call()
   var totalShares = new BigNumber(res).shiftedBy(-18)
