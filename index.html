@@ -55,7 +55,7 @@ async function getShares() {
 
   res = await lidoContract.methods.getTotalPooledEther().call()
   var totalEth = new BigNumber(res).shiftedBy(-18)
-  totalEthEl.innerText = totalEth;
+  totalEthEl.innerText = totalEth.toFixed(2);
 
   res = await lidoContract.methods.balanceOf(addy).call()
   var balance = new BigNumber(res).shiftedBy(-18)
