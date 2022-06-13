@@ -23,6 +23,11 @@
 
     <script>
 //const Web3 = require("web3")
+
+if (window.location.hash) {
+  document.getElementById('addy').value = window.location.hash.substring(1)
+}
+
 const web3 = new Web3("https://cloudflare-eth.com")
 
 const LIDO_ADDY = '0xae7ab96520de3a18e5e111b5eaab095312d7fe84'
