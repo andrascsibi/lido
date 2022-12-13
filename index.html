@@ -9,7 +9,7 @@
   <body>
     <h1>Lido stETH balance and share</h1>
     <input id="addy" style="width: 320px" type="text" onchange="getShares()" value="0xed0eebb4d520a6b0eccc4df8e5214e7a6697c111"></input>
-
+    <a id="explorer" href="#" target="_blank">View balance on etherscan</a>
     <dl>
       <dt>shares</dt>
       <dd id="shares"></dd>
@@ -17,8 +17,10 @@
       <dd id="totalshares"></dd>
       <dt>total pooled ETH</dt>
       <dd id="totaleth"></dd>
-      <dt>balance = shares * total ETH / total shares</dt>
+      <dt>balance</dt>
       <dd id="balance"></dd>
+      <dt>shares * total ETH / total shares</dt>
+      <dd id="balance2"></dd>
     </dl>
 
     <script>
@@ -41,6 +43,9 @@ async function getShares() {
   var addyEl = document.getElementById('addy')
   var addy = addyEl.value
 
+  var explorerEl = document.getElementById('explorer');
+  explorerEl.href = 'https://etherscan.io/token/0xae7ab96520de3a18e5e111b5eaab095312d7fe84?a=' + addy;
+
   var sharesEl = document.getElementById('shares');
   sharesEl.innerText = ''
   var totalSharesEl = document.getElementById('totalshares');
@@ -49,6 +54,8 @@ async function getShares() {
   totalEthEl.innerText = ''
   var balanceEl = document.getElementById('balance');
   balanceEl.innerText = ''
+  var balance2El = document.getElementById('balance2');
+  balance2El.innerText = ''
 
   var res = await lidoContract.methods.sharesOf(addy).call()
   var shares = new BigNumber(res).shiftedBy(-18)
@@ -64,7 +71,8 @@ async function getShares() {
 
   res = await lidoContract.methods.balanceOf(addy).call()
   var balance = new BigNumber(res).shiftedBy(-18)
-  balanceEl.innerText = balance + ' = ' + shares.multipliedBy(totalEth).dividedBy(totalShares);
+  balanceEl.innerText = balance;
+  balance2El.innerText = shares.multipliedBy(totalEth).dividedBy(totalShares);
 
 }
 
